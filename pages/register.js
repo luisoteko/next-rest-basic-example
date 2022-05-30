@@ -15,13 +15,13 @@ const Register = () => {
         password: yup.string().required(),
         password_confirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
         email: yup.string().email("Not a valid email").required(),
-        firstName: yup.string().required(),
-        lastName: yup.string().required(),
+        first_name: yup.string().required(),
+        last_name: yup.string().required(),
     });
     const initialValues = {
         username: '',
-        firstName: '',
-        lastName: '',
+        first_name: '',
+        last_name: '',
         email: '',
         password: '',
         password_confirm: '',
@@ -48,14 +48,14 @@ const Register = () => {
                             <ErrorMessage name="username" component="div" className="invalid-feedback" />
                         </div>
                         <div className="form-group my-2 mx-sm-10">
-                            <label htmlFor="firstName">First Name</label>
-                            <Field name="firstName" type="text" className={'form-control' + (errors.firstName && touched.firstName ? ' is-invalid' : '')} />
-                            <ErrorMessage name="firstName" component="div" className="invalid-feedback" />
+                            <label htmlFor="first_name">First Name</label>
+                            <Field name="first_name" type="text" className={'form-control' + (errors.first_name && touched.first_name ? ' is-invalid' : '')} />
+                            <ErrorMessage name="first_name" component="div" className="invalid-feedback" />
                         </div>
                         <div className="form-group my-2 mx-sm-10">
-                            <label htmlFor="lastName">Last Name</label>
-                            <Field name="lastName" type="text" className={'form-control' + (errors.lastName && touched.lastName ? ' is-invalid' : '')} />
-                            <ErrorMessage name="lastName" component="div" className="invalid-feedback" />
+                            <label htmlFor="last_name">Last Name</label>
+                            <Field name="last_name" type="text" className={'form-control' + (errors.last_name && touched.last_name ? ' is-invalid' : '')} />
+                            <ErrorMessage name="last_name" component="div" className="invalid-feedback" />
                         </div>
                         <div className="form-group my-2 mx-sm-10">
                             <label htmlFor="email">Email</label>
