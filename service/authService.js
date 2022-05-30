@@ -1,5 +1,6 @@
+const url = process.env.NEXT_PUBLIC_API_URL
 export const signUp = async (values) => {
-    const response = await fetch(`http://localhost:8000/authentication/register/`, {
+    const response = await fetch(`${url}/authentication/register/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -12,7 +13,8 @@ export const signUp = async (values) => {
 }
 
 export const login = async (values) => {
-    const response = await fetch(`http://localhost:8000/authentication/login/`, {
+    values['login'] = values['login'].toLowerCase();
+    const response = await fetch(`${url}/authentication/login/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -28,7 +30,7 @@ export const login = async (values) => {
 }
 
 export const logout = async () => {
-    const response = await fetch(`http://localhost:8000/authentication/logout/`, {
+    const response = await fetch(`${url}/authentication/logout/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -41,7 +43,7 @@ export const logout = async () => {
 }
 
 export const getMyProfile = async () => {
-    const response = await fetch(`http://localhost:8000/authentication/profile/`, {
+    const response = await fetch(`${url}/authentication/profile/`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

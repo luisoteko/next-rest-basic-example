@@ -1,5 +1,6 @@
+const url = process.env.NEXT_PUBLIC_API_URL
 export const getNotes = async () => {
-    const response = await fetch(`http://localhost:8000/notes/`, {
+    const response = await fetch(`${url}/notes/`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -12,7 +13,7 @@ export const getNotes = async () => {
 }
 
 export const createNote = async (values) => {
-    const response = await fetch(`http://localhost:8000/notes/`, {
+    const response = await fetch(`${url}/notes/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -26,7 +27,7 @@ export const createNote = async (values) => {
 }
 
 export const updateNote = async (values) => {
-    const response = await fetch(`http://localhost:8000/notes/${values.id}/`, {
+    const response = await fetch(`${url}/notes/${values.id}/`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -40,7 +41,7 @@ export const updateNote = async (values) => {
 }
 
 export const deleteNote = async (id) => {
-    const response = await fetch(`http://localhost:8000/notes/${id}/`, {
+    const response = await fetch(`${url}/notes/${id}/`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -51,7 +52,7 @@ export const deleteNote = async (id) => {
     return x;
 }
 export const getSharedNotes = async () => {
-    const response = await fetch(`http://localhost:8000/notes/shared/`, {
+    const response = await fetch(`${url}/notes/shared/`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -65,7 +66,7 @@ export const getSharedNotes = async () => {
 
 
 export const share = async (values, id) => {
-    const response = await fetch(`http://localhost:8000/share/`, {
+    const response = await fetch(`${url}/share/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -79,7 +80,7 @@ export const share = async (values, id) => {
 }
 
 export const unShare = async (id) => {
-    const response = await fetch(`http://localhost:8000/shares/${id}/`, {
+    const response = await fetch(`${url}/shares/${id}/`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
