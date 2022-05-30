@@ -2,9 +2,15 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { login, signUp } from '../service/authService';
 import * as yup from 'yup';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 
 const Login = () => {
+    useEffect(()=>{
+        if (typeof window !== "undefined" && localStorage.getItem('token')){
+            window.location.href = '/';
+        }
+    }, [])
     const router = useRouter();
     const schema = yup.object().shape({
         login: yup.string().required(),
@@ -16,7 +22,7 @@ const Login = () => {
     }
     const onSubmit = async(values, {setErrors, resetForm}) => {
         let response = await login(values);
-        response[0] != 200 ? new setErrors(response[1]) : router.push("/notes");
+        response[0] != 200 ? new setErrors(response[1]) : router.push("/");
     }
     return (
         <div className="container">

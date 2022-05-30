@@ -20,6 +20,35 @@ export const login = async (values) => {
         body: JSON.stringify(values)
     });
     const data = await response.json();
-    localStorage.setItem('token', data.token);
+    if (response.status == 200) {
+        localStorage.setItem('token', data.token);
+        getMyProfile();
+    }
+    return [response.status, data];
+}
+
+export const logout = async () => {
+    const response = await fetch(`http://localhost:8000/authentication/logout/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${localStorage.getItem('token')}`
+        }
+    });
+    const data = await response.json();
+    localStorage.removeItem('token');
+    return [response.status, data];
+}
+
+export const getMyProfile = async () => {
+    const response = await fetch(`http://localhost:8000/authentication/profile/`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${localStorage.getItem('token')}`
+        }
+    });
+    const data = await response.json();
+    localStorage.setItem('user', JSON.stringify(data));
     return [response.status, data];
 }

@@ -2,7 +2,13 @@ import {Formik, Form, Field, ErrorMessage} from 'formik';
 import { signUp } from '../service/authService';
 import * as yup from 'yup';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 const Register = () => {
+    useEffect(()=>{
+        if (typeof window !== "undefined" && localStorage.getItem('token')){
+            window.location.href = '/';
+        }
+    },[])
     const router = useRouter();
     const schema = yup.object().shape({
         username: yup.string().required(),
