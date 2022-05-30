@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
 import { Stack } from "react-bootstrap";
 import Note from "../components/note";
-import { getNotes } from "../service/notesService";
+import { getNotes, getSharedNotes } from "../service/notesService";
 
 const NotesPage = () => {
     const [notes, setNotes] = useState([]);
+    const [sharedNotes, setSharedNotes] = useState([]);
+    const [create, setCreate] = useState(false);
     const setError = () => {}
     useEffect(() => {
         console.log("NotesPage.useEffect");
         getNotes().then(data => {
             console.log("NotesPage.useEffect.getNotes", data);
-            data.status != 200 ? setError() : setNotes(data[1]);
+            data[0] != 200 ? setError() : setNotes(data[1]);
+        })
+        getSharedNotes().then(data => {
+            console.log("NotesPage.useEffect.getSharedNotes", data);
+            data[0] != 200 ? setError() : setSharedNotes(data[1]);
         })
     }, [])
 
@@ -19,27 +25,46 @@ const NotesPage = () => {
     const openNote = (note) => {
         setSelectedNote(note);
         setShowModal(true);
+        setCreate(false);
     }
     const closeModal = () => {
         setShowModal(false);
+        getNotes().then(data => {
+            console.log("NotesPage.useEffect.getNotes", data);
+            data[0] != 200 ? setError() : setNotes(data[1]);
+        });
     }
     const createNote = () => {
+        setCreate(true);
         setSelectedNote({
             title: "",
-            content: "",
+            body: "",
         });
         setShowModal(true);
     }
     return(
         <div>
             <h1>Notes Page</h1>
-            {showModal && <Note note={selectedNote} close={closeModal} show={showModal}/>}
+            {showModal && <Note note={selectedNote} close={closeModal} show={showModal} create={create}/>}
             <div className="grid grid-cols-1 gap sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-5">
             {notes.map((note, key)=>{
                 return(
                     <div key={key} onClick={()=>openNote(note)} className="border border-gray-900 rounded py-2 px-4 w-60 max-w-xs text-ellipsis min-h-50">
                         <h1>{note.title}</h1>
-                        <p>{note.content}</p>
+                        <p>{note.body}</p>
+                        <p>{note.created}</p>
+                        <p>{note.modified}</p>
+                    </div>
+                )
+            })}
+            </div>
+            <h1>Shared Notes</h1>
+            <div className="grid grid-cols-1 gap sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-5">
+            {sharedNotes.map((note, key)=>{
+                return(
+                    <div key={key} onClick={()=>openNote(note)} className="border border-gray-900 rounded py-2 px-4 w-60 max-w-xs text-ellipsis min-h-50">
+                        <h1>{note.title}</h1>
+                        <p>{note.body}</p>
                         <p>{note.created}</p>
                         <p>{note.modified}</p>
                     </div>

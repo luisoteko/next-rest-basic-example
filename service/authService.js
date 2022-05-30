@@ -20,6 +20,6 @@ export const login = async (values) => {
         body: JSON.stringify(values)
     });
     const data = await response.json();
-    
+    localStorage.setItem('token', data.token);
     return [response.status, data];
 }
